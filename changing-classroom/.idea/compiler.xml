@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="changing-classroom-common" />
+        <module name="changing-classroom-util" />
+        <module name="changing-classroom-service-websocket" />
+        <module name="changing-classroom-service-user-feign" />
+        <module name="changing-classroom-gateway" />
+        <module name="changing-classroom-service-activity" />
+        <module name="changing-classroom-service-user" />
+        <module name="changing-classroom-model" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="17">
+      <module name="untitledchanging-classroom-service-activity" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="changing-classroom-common" options="-parameters" />
+      <module name="changing-classroom-feign" options="" />
+      <module name="changing-classroom-gateway" options="-parameters" />
+      <module name="changing-classroom-model" options="-parameters" />
+      <module name="changing-classroom-service" options="" />
+      <module name="changing-classroom-service-activity" options="-parameters" />
+      <module name="changing-classroom-service-user" options="-parameters" />
+      <module name="changing-classroom-service-user-feign" options="-parameters" />
+      <module name="changing-classroom-service-websocket" options="-parameters" />
+      <module name="changing-classroom-util" options="-parameters" />
+      <module name="untitledchanging-classroom-service-activity" options="-parameters" />
+    </option>
+  </component>
+</project>

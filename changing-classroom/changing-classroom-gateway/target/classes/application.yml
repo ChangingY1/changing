@@ -1,0 +1,50 @@
+server:
+  port: 8500
+
+spring:
+  application:
+    name: classroom-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+        username: nacos
+        password: nacos
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # 设置允许跨域请求的域名
+            allowedOriginPatterns: "*"
+            # 允许携带cookie
+            allowCredentials: true
+            # 允许请求中携带的头信息
+            allowedHeaders: "*"
+            # 运行跨域的请求方式
+            allowedMethods: "*"
+            # 跨域检测的有效期,单位s
+            maxAge: 36000
+      routes:
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/*/user/**
+        - id: service-activity
+          uri: lb://service-activity
+          predicates:
+            - Path=/*/activity/**
+        - id: service-websocket
+          uri: lb:ws://service-websocket
+          predicates:
+            - Path=/*/websocket/activity/**
+        - id: service-websocket
+          uri: lb://service-websocket
+          predicates:
+            - Path=/*/websocket/**
+  data:
+    redis:
+      port: 6379
+      host: localhost
