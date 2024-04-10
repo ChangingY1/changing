@@ -5,7 +5,6 @@ import com.changing.classroom.activity.service.ActivityService;
 import com.changing.classroom.model.entity.activity.Activity;
 import com.changing.classroom.model.vo.common.ResultCodeEnum;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

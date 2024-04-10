@@ -20,5 +20,4 @@ public interface ActivityMapper {
 
     //4 活动删除
     int deleteById(Long id);
-
 }

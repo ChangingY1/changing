@@ -28,4 +28,5 @@ public class ActivityServiceImpl implements ActivityService {
     public int updataActivity(Activity activity) {
         return activityMapper.update(activity);
     }
+
 }

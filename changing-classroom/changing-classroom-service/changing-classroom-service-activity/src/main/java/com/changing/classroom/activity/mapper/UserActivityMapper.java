@@ -1,22 +1,25 @@
 package com.changing.classroom.activity.mapper;
 
-import com.changing.classroom.model.entity.relation.UARelation;
+import com.changing.classroom.model.entity.record.UARecord;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 
 @Mapper
 public interface UserActivityMapper {
 
     //根据id查询数据库表
-    UARelation selectById(Long id);
-    UARelation select(UARelation uaRelation);
+    UARecord selectById(Long id);
+    UARecord select(UARecord uaRelation);
     //2 添加
-    int save(UARelation uaRelation);
+    int save(UARecord uaRelation);
 
     //3 修改
-    int update(UARelation uaRelation);
+    int update(UARecord uaRelation);
 
     //4 删除
     int deleteById(Long id);
 
+    List<Long> getJoinedActivityIdsByUserId(long userId);
 }

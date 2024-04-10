@@ -6,10 +6,13 @@ import com.changing.classroom.activity.service.ActivityService;
 import com.changing.classroom.activity.service.UserActivityService;
 import com.changing.classroom.common.exception.ChangingException;
 import com.changing.classroom.model.entity.activity.Activity;
-import com.changing.classroom.model.entity.relation.UARelation;
+import com.changing.classroom.model.entity.record.UARecord;
 import com.changing.classroom.model.vo.common.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserActivityServiceImpl implements UserActivityService {
@@ -23,20 +26,37 @@ public class UserActivityServiceImpl implements UserActivityService {
     ActivityMapper activityMapper;
 
     @Override
-    public void save(UARelation uaRelation) {
-        UARelation relation = userActivityMapper.select(uaRelation);
+    public void save(UARecord uaRelation) {
+        UARecord relation = userActivityMapper.select(uaRelation);
         if (relation != null) {
             throw new ChangingException(ResultCodeEnum.ERROR.getCode(), "请勿重复报名");
-        }
-        Activity activity = activityService.getActivitiyInfoById(uaRelation.getActivityId());
-        if (activity.getRegisteredCount() >= activity.getMaxParticipants()) {
-            throw new ChangingException(ResultCodeEnum.ERROR.getCode(), "报名人数已满");
         }
         int save = userActivityMapper.save(uaRelation);
         if (save == 0) {
             throw new ChangingException(ResultCodeEnum.DATA_ERROR);
         }
-        activity.setRegisteredCount(activity.getRegisteredCount() + 1);
-        activityMapper.update(activity);
     }
+
+    @Override
+    public List<Activity> getJoinedActivitiesByUserId(String userId) {
+        List<Long> activityIds = userActivityMapper.getJoinedActivityIdsByUserId(Long.parseLong(userId));
+        List<Activity> activities = new ArrayList<>();
+        for (Long activityId : activityIds) {
+            Activity activity = activityService.getActivitiyInfoById(activityId);
+            activities.add(activity);
+        }
+        return activities;
+    }
+
+    @Override
+    public Boolean isJoinedActivity(String userId, String activityId) {
+        UARecord uaRelation = new UARecord();
+        uaRelation.setUserId(Long.valueOf(userId));
+        uaRelation.setActivityId(Long.valueOf(activityId));
+        if (userActivityMapper.select(uaRelation) == null) {
+            return false;
+        }
+        return true;
+    }
+
 }

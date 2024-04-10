@@ -3,23 +3,29 @@
 <mapper namespace="com.changing.classroom.activity.mapper.UserActivityMapper">
 
     <sql id="columns">
-        id,user_id userId,activity_id activityId,create_time createTime,update_time updateTime,is_deleted isDeleted
+        id
+        ,user_id userId,activity_id activityId,state,create_time createTime,update_time updateTime,is_deleted isDeleted
     </sql>
 
 <!--    //4 用户删除-->
     <update id="deleteById">
-        update users_activities set is_deleted=1 where id=#{id}
+        update users_activities_records
+        set is_deleted=1
+        where id = #{id}
     </update>
 
 
 <!--    //3 用户修改-->
     <update id="update">
-        update users_activities set
+        update users_activities_records set
         <if test="userId != null and userId != ''">
             user_id = #{userId},
         </if>
         <if test="activityId != null and activityId != ''">
             activity_id = #{activityId},
+        </if>
+        <if test="state != null and state != ''">
+            state = #{state},
         </if>
         update_time = now()
         where
@@ -28,27 +34,37 @@
 
 <!--    //2 用户添加-->
     <insert id="save">
-        insert into users_activities (id,
+        insert into users_activities_records (id,
                                       user_id,
-                                      activity_id)
+                                      activity_id,
+                                      state)
         values (#{id},
                 #{userId},
-                #{activityId})
+                #{activityId},
+                #{state})
 
     </insert>
 
-    <select id="selectById" resultType="com.changing.classroom.model.entity.relation.UARelation">
-        SELECT <include refid="columns"/>
-        FROM users_activities
+    <select id="selectById" resultType="com.changing.classroom.model.entity.record.UARecord">
+        SELECT
+        <include refid="columns"/>
+        FROM users_activities_records
         WHERE id=#{id}
         and is_deleted=0
     </select>
-    <select id="select" resultType="com.changing.classroom.model.entity.relation.UARelation">
-        SELECT <include refid="columns"/>
-        FROM users_activities
+    <select id="select" resultType="com.changing.classroom.model.entity.record.UARecord">
+        SELECT
+        <include refid="columns"/>
+        FROM users_activities_records
         WHERE user_id = #{userId}
         and activity_id = #{activityId}
         and is_deleted=0
+    </select>
+    <select id="getJoinedActivityIdsByUserId" resultType="java.lang.Long">
+        SELECT activity_id
+        FROM users_activities_records
+        WHERE user_id = #{userId}
+          and is_deleted = 0
     </select>
 
 

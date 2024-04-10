@@ -2,11 +2,8 @@ package com.changing.classroom.activity.controller;
 
 
 import com.changing.classroom.activity.service.ActivityMessageInfoService;
-import com.changing.classroom.activity.service.ActivityService;
-import com.changing.classroom.model.entity.activity.Activity;
 import com.changing.classroom.model.entity.websocket.MessageInfo;
 import com.changing.classroom.model.vo.common.ResultCodeEnum;
-import com.changing.classroom.model.vo.h5.UserInfoVo;
 import com.changing.classroom.model.vo.websocket.MessageInfoVo;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
