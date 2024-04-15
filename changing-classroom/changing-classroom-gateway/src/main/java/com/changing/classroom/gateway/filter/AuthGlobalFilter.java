@@ -38,7 +38,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
         //获取请求路径
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath();
-        if(antPathMatcher.match("/*/user/**",path)) {
+        if(antPathMatcher.match("/**/auth/**",path)) {
             return chain.filter(exchange);
         }
         User user = this.getUser(request);

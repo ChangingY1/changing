@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>changing-classroom-service-user-feign</module>
+        <module>changing-classroom-service-activity-feign</module>
     </modules>
 
     <properties>

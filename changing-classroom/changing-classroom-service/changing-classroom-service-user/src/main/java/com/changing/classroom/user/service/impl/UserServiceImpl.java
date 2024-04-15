@@ -1,13 +1,17 @@
 package com.changing.classroom.user.service.impl;
 
+import com.changing.classroom.activity.feign.activity.ActivityFeignClient;
 import com.alibaba.fastjson.JSON;
 import com.changing.classroom.common.exception.ChangingException;
 import com.changing.classroom.model.dto.h5.UserLoginDto;
 import com.changing.classroom.model.dto.h5.UserRegisterDto;
+import com.changing.classroom.model.entity.record.HoursRecord;
 import com.changing.classroom.model.entity.user.User;
 import com.changing.classroom.model.vo.common.RedisKeyHeadEnum;
 import com.changing.classroom.model.vo.common.ResultCodeEnum;
+import com.changing.classroom.model.vo.h5.HoursRecordVo;
 import com.changing.classroom.model.vo.h5.UserInfoVo;
+import com.changing.classroom.user.mapper.HourMapper;
 import com.changing.classroom.user.mapper.UserMapper;
 import com.changing.classroom.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +30,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private HourMapper hourMapper;
+    @Autowired
+    private ActivityFeignClient activityFeignClient;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
@@ -127,5 +137,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoVo getUserInfoById(String userId) {
         return userMapper.getUserInfoById(userId);
+    }
+
+    @Override
+    public List<HoursRecordVo> getHoursRecoedsByUserId(Long userId) {
+        List<HoursRecord> records = hourMapper.findByUserId(userId);
+        List<HoursRecordVo> recordVos = new ArrayList<>();
+        for (HoursRecord record : records) {
+            if (record.getIsDeleted() == 0){
+                HoursRecordVo recordVo = new HoursRecordVo();
+                String title = activityFeignClient.getActivitiyInfo(record.getActivityId()).getBody().getTitle();
+                recordVo.setActivityTitle(title);
+                recordVo.setChanges(record.getChanges());
+                recordVo.setGetTime(record.getCreateTime());
+                recordVos.add(recordVo);
+            }
+        }
+        return recordVos;
     }
 }

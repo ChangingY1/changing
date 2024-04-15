@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="changing-classroom-service-activity-feign" />
         <module name="changing-classroom-common" />
         <module name="changing-classroom-util" />
         <module name="changing-classroom-service-websocket" />
@@ -29,6 +30,7 @@
       <module name="changing-classroom-model" options="-parameters" />
       <module name="changing-classroom-service" options="" />
       <module name="changing-classroom-service-activity" options="-parameters" />
+      <module name="changing-classroom-service-activity-feign" options="-parameters" />
       <module name="changing-classroom-service-user" options="-parameters" />
       <module name="changing-classroom-service-user-feign" options="-parameters" />
       <module name="changing-classroom-service-websocket" options="-parameters" />

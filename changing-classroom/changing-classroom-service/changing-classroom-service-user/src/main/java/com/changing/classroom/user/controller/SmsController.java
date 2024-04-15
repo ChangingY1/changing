@@ -16,7 +16,7 @@ public class SmsController {
     @Autowired
     private SmsService smsService ;
 
-    @GetMapping(value = "/sendCode/{phoneNumber}")
+    @GetMapping(value = "auth/sendCode/{phoneNumber}")
     public ResponseEntity sendValidateCode(@PathVariable String phoneNumber) {
         smsService.sendValidateCode(phoneNumber);
         return ResponseEntity.status(ResultCodeEnum.SUCCESS.getCode()) .body(ResultCodeEnum.SUCCESS.getMessage());

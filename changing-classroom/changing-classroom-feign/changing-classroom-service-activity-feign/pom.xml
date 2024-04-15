@@ -5,22 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.changing</groupId>
-        <artifactId>changing-classroom-service</artifactId>
+        <artifactId>changing-classroom-feign</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>changing-classroom-service-user</artifactId>
+    <artifactId>changing-classroom-service-activity-feign</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>com.changing</groupId>
-            <artifactId>changing-classroom-service-activity-feign</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+
 </project>

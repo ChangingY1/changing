@@ -22,28 +22,12 @@ public class UserActivityController {
 
     @Autowired
     private UserActivityService userActivityService;
-    @Autowired
-    private ActivityService activityService;
+
 
     @Operation(summary = "报名活动")
-    @Transactional
     @PostMapping("signUp")
     public ResponseEntity<String> signUp(@RequestBody UARelationDto uaRelationDto) {
-        Activity activity = activityService.getActivitiyInfoById(uaRelationDto.getActivityId());
-        if (activity == null) {
-            return ResponseEntity.status(ResultCodeEnum.ACTIVITY_NULL.getCode()).body(ResultCodeEnum.ACTIVITY_NULL.getMessage());
-        }
-        if (activity.getRegisteredCount() >= activity.getMaxParticipants()) {
-            System.out.println(activity.getRegisteredCount());
-            return ResponseEntity.status(ResultCodeEnum.STAFF_FULL.getCode()).body(ResultCodeEnum.STAFF_FULL.getMessage());
-        }
-        activity.setRegisteredCount(activity.getRegisteredCount() + 1);
-        activityService.updataActivity(activity);
-        UARecord uaRelation = new UARecord();
-        uaRelation.setActivityId(uaRelationDto.getActivityId());
-        uaRelation.setUserId(uaRelationDto.getUserId());
-        uaRelation.setState(1);
-        userActivityService.save(uaRelation);
+        userActivityService.signUp(uaRelationDto);
         return ResponseEntity.ok(ResultCodeEnum.SUCCESS.getMessage());
     }
 

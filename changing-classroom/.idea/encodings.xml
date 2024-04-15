@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/changing-classroom-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/changing-classroom-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/changing-classroom-feign/changing-classroom-service-activity-feign/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/changing-classroom-feign/changing-classroom-service-user-feign/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/changing-classroom-feign/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/changing-classroom-feign/src/main/resources" charset="UTF-8" />
