@@ -12,8 +12,8 @@
     <artifactId>changing-classroom-feign</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>changing-classroom-service-user-feign</module>
-        <module>changing-classroom-service-activity-feign</module>
+        <module>changing-classroom-feign-activity</module>
+        <module>changing-classroom-feign-user</module>
     </modules>
 
     <properties>

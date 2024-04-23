@@ -4,10 +4,10 @@
 
     <sql id="columns">
         id
-        ,title,description,start_time startTime,end_time endTime,location,organizer,hours,create_time createTime,update_time updateTime,registered_count registeredCount,max_participants maxParticipants,type,image,is_deleted isDeleted
+        ,title,state,description,start_time startTime,end_time endTime,location,organizer,hours,create_time createTime,update_time updateTime,registered_count registeredCount,max_participants maxParticipants,type,image,is_deleted isDeleted
     </sql>
 
-    <!--    //4 用户删除-->
+    <!--    //4 活动删除-->
     <update id="deleteById">
         update activities
         set is_deleted=1
@@ -15,11 +15,14 @@
     </update>
 
 
-    <!--    //3 用户修改-->
+    <!--    //3 活动修改-->
     <update id="update">
         update activities set
         <if test="title != null and title != ''">
             title = #{title},
+        </if>
+        <if test="state != null">
+            state = #{state},
         </if>
         <if test="description != null and description != ''">
             description = #{description},
@@ -56,9 +59,10 @@
         id = #{id}
     </update>
 
-    <!--    //2 用户添加-->
+    <!--    //2 活动添加-->
     <insert id="save">
         insert into activities (id,
+                                state,
                                 title,
                                 description,
                                 start_time,
@@ -71,6 +75,7 @@
                                 type,
                                 image)
         values (#{id},
+                #{state},
                 #{title},
                 #{description},
                 #{startTime},

@@ -16,6 +16,7 @@
         <module>changing-classroom-service</module>
         <module>changing-classroom-util</module>
         <module>changing-classroom-service</module>
+        <module>changing-classroom-admin</module>
     </modules>
 
     <parent>

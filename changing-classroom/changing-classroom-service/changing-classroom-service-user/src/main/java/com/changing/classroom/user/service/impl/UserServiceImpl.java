@@ -1,10 +1,12 @@
 package com.changing.classroom.user.service.impl;
 
-import com.changing.classroom.activity.feign.activity.ActivityFeignClient;
+
 import com.alibaba.fastjson.JSON;
 import com.changing.classroom.common.exception.ChangingException;
+import com.changing.classroom.feign.activity.ActivityFeignClient;
 import com.changing.classroom.model.dto.h5.UserLoginDto;
 import com.changing.classroom.model.dto.h5.UserRegisterDto;
+import com.changing.classroom.model.entity.activity.Activity;
 import com.changing.classroom.model.entity.record.HoursRecord;
 import com.changing.classroom.model.entity.user.User;
 import com.changing.classroom.model.vo.common.RedisKeyHeadEnum;
@@ -14,14 +16,17 @@ import com.changing.classroom.model.vo.h5.UserInfoVo;
 import com.changing.classroom.user.mapper.HourMapper;
 import com.changing.classroom.user.mapper.UserMapper;
 import com.changing.classroom.user.service.UserService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +39,7 @@ public class UserServiceImpl implements UserService {
     private HourMapper hourMapper;
     @Autowired
     private ActivityFeignClient activityFeignClient;
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
@@ -66,7 +72,7 @@ public class UserServiceImpl implements UserService {
         user.setStudentId(studentId);
         user.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
         user.setPhoneNumber(phoneNumber);
-        user.setStatus("1");
+        user.setState(1);
         user.setAvatar("http://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83eoj0hHXhgJNOTSOFsS4uZs8x1ConecaVOB8eIl115xmJZcT4oCicvia7wMEufibKtTLqiaJeanU2Lpg3w/132");
 
         userMapper.save(user);
@@ -107,7 +113,7 @@ public class UserServiceImpl implements UserService {
         }
 
         //4 校验用户是否禁用
-        if (user.getStatus() == "0") {
+        if (Objects.equals(user.getState(), "0")) {
             throw new ChangingException(ResultCodeEnum.ACCOUNT_STOP);
         }
 
@@ -135,7 +141,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoVo getUserInfoById(String userId) {
+    public User getUserInfoById(String userId) {
         return userMapper.getUserInfoById(userId);
     }
 
@@ -146,7 +152,7 @@ public class UserServiceImpl implements UserService {
         for (HoursRecord record : records) {
             if (record.getIsDeleted() == 0){
                 HoursRecordVo recordVo = new HoursRecordVo();
-                String title = activityFeignClient.getActivitiyInfo(record.getActivityId()).getBody().getTitle();
+                String title = Objects.requireNonNull(activityFeignClient.getActivitiyInfo(record.getActivityId()).getBody()).getTitle();
                 recordVo.setActivityTitle(title);
                 recordVo.setChanges(record.getChanges());
                 recordVo.setGetTime(record.getCreateTime());
@@ -154,5 +160,12 @@ public class UserServiceImpl implements UserService {
             }
         }
         return recordVos;
+    }
+
+    @Override
+    public List<User> getUserInfoByPage(int page) {
+        PageHelper.startPage(page, 6);
+        List<User> userList = userMapper.getAllUser();
+        return userList;
     }
 }

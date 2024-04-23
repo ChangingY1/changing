@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/activity")
+@RequestMapping("api/activity/messageInfo")
 public class ActivityMessageInfoController {
 
     @Autowired
     private ActivityMessageInfoService activityMessageInfoService;
 
     @Operation(summary = "获取聊天记录")
-    @GetMapping("getMessageInfoByActivityId/{activityId}")
+    @GetMapping("activityId/{activityId}")
     public ResponseEntity<List<MessageInfoVo>> getMessageInfoByActivityId(@PathVariable("activityId") String activityId,@RequestHeader("userId")String userId) {
         List<MessageInfo> MessageInfos = activityMessageInfoService.getMessageInfoByActivityId(Long.valueOf(activityId));
         List<MessageInfoVo> messageInfoVoList = new ArrayList<>();
@@ -38,7 +38,7 @@ public class ActivityMessageInfoController {
     }
 
     @Operation(summary = "保存对话消息")
-    @PostMapping("savaMessageInfo")
+    @PutMapping
     public ResponseEntity<Integer> savaMessageInfo(@RequestBody MessageInfo messageInfo) {
         int save = activityMessageInfoService.save(messageInfo);
         return ResponseEntity.status(ResultCodeEnum.SUCCESS.getCode()).body(save);

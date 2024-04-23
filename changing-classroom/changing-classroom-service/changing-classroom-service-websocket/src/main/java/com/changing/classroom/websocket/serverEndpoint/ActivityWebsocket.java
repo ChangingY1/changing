@@ -1,11 +1,7 @@
 package com.changing.classroom.websocket.serverEndpoint;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
-
 
 import com.changing.classroom.feign.activity.ActivityFeignClient;
 import com.changing.classroom.feign.user.UserFeignClient;
@@ -18,11 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import lombok.extern.slf4j.Slf4j;

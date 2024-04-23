@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/websocket")
+@RequestMapping("api/websocket/onlineUser")
 public class WebsocketController {
 
 
@@ -23,7 +23,7 @@ public class WebsocketController {
     private UserFeignClient userFeignClient;
 
     @Operation(summary = "获取在线用户")
-    @GetMapping("getOnlineUser/{activityId}")
+    @GetMapping("{activityId}")
     public ResponseEntity<List<UserInfoVo>> getOnlineUser(@PathVariable("activityId") String activityId) {
         List<UserInfoVo> users = new ArrayList<>();
         for (ActivityWebsocket websocket : ActivityWebsocket.websockets) {

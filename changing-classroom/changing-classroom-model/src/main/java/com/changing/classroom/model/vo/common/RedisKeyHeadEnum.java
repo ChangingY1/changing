@@ -7,7 +7,7 @@ public enum RedisKeyHeadEnum {
 
     PHONE_CODE("phone-code:") ,
     USER_COOKIE("user-cookie:"),
-    ;
+    ADMINUSER_TOKEN("admin-user-tpken:");
 
     private String keyHead ;    // 响应消息
 

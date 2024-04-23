@@ -10,5 +10,5 @@ public interface ActivityService {
 
     Activity getActivitiyInfoById(Long activityId);
 
-    int updataActivity(Activity activity);
+    void updataActivity(Activity activity);
 }

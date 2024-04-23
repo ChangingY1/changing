@@ -15,6 +15,7 @@
         <module>changing-classroom-service-user</module>
         <module>changing-classroom-service-activity</module>
         <module>changing-classroom-service-websocket</module>
+        <module>changing-classroom-service-admin</module>
     </modules>
 
     <properties>

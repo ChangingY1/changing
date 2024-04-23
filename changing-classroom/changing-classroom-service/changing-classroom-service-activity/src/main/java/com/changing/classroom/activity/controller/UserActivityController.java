@@ -17,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/activity")
+@RequestMapping("api/activity/uaRelation")
 public class UserActivityController {
 
     @Autowired
@@ -25,21 +25,21 @@ public class UserActivityController {
 
 
     @Operation(summary = "报名活动")
-    @PostMapping("signUp")
+    @PutMapping
     public ResponseEntity<String> signUp(@RequestBody UARelationDto uaRelationDto) {
         userActivityService.signUp(uaRelationDto);
         return ResponseEntity.ok(ResultCodeEnum.SUCCESS.getMessage());
     }
 
     @Operation(summary = "获取已加入的活动列表")
-    @GetMapping("getJoinedActivities")
+    @GetMapping("userId")
     public ResponseEntity<List<Activity>> getJoinedActivities(@RequestHeader("userId") String userId) {
         List<Activity> activities = userActivityService.getJoinedActivitiesByUserId(userId);
         return ResponseEntity.status(ResultCodeEnum.SUCCESS.getCode()).body(activities);
     }
 
     @Operation(summary = "是否已加入活动")
-    @GetMapping("isJoinedActivity/{activityId}")
+    @GetMapping("activityId/{activityId}/userId")
     public ResponseEntity<Boolean> isJoinedActivity(@PathVariable("activityId") String activityId, @RequestHeader("userId") String userId) {
         Boolean isJoined = userActivityService.isJoinedActivity(userId, activityId);
         return ResponseEntity.status(ResultCodeEnum.SUCCESS.getCode()).body(isJoined);

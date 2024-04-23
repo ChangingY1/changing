@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.changing.classroom.admin.mapper.AdminUserMapper">
+
+    <sql id="columns">
+        id
+        ,username,password,roles,avatar,status,create_time createTime,update_time updateTime,is_deleted isDeleted
+    </sql>
+
+
+    <select id="findById" resultType="com.changing.classroom.model.entity.admin.user.AdminUser">
+        SELECT <include refid="columns"/>
+        FROM admin_user
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByUsername" resultType="com.changing.classroom.model.entity.admin.user.AdminUser">
+        SELECT <include refid="columns"/>
+        FROM admin_user
+        WHERE username = #{username}
+    </select>
+
+    <insert id="insert" parameterType="com.changing.classroom.model.entity.admin.user.AdminUser">
+        INSERT INTO admin_user (username, password, avatar, status, roles, token, createTime, updateTime, isDeleted)
+        VALUES (#{username}, #{password}, #{avatar}, #{status}, #{roles}, #{token}, #{createTime}, #{updateTime},
+                #{isDeleted})
+    </insert>
+
+    <update id="update" parameterType="com.changing.classroom.model.entity.admin.user.AdminUser">
+        UPDATE admin_user
+        <if test="studentId != null and studentId != ''">
+            student_id = #{studentId},
+        </if>
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="avatar != null and avatar != ''">
+            avatar = #{avatar},
+        </if>
+        <if test="status != null and status != ''">
+            status = #{status},
+        </if>
+        <if test="roles != null and roles != ''">
+            roles = #{roles},
+        </if>
+        <if test="isDeleted != null and isDeleted != ''">
+            isDeleted = #{isDeleted},
+        </if>
+        update_time = now()
+        WHERE id = #{id}
+    </update>
+
+
+</mapper>
+

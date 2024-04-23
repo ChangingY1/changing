@@ -3,7 +3,7 @@
 <mapper namespace="com.changing.classroom.user.mapper.UserMapper">
 
     <sql id="columns">
-        id,student_id studentId,password,name,phone_number phoneNumber,avatar,description,status,create_time createTime,update_time updateTime,is_deleted isDeleted,hours
+        id,student_id studentId,password,name,phone_number phoneNumber,avatar,state,create_time createTime,update_time updateTime,is_deleted isDeleted,hours
     </sql>
 
 <!--    //4 用户删除-->
@@ -26,14 +26,14 @@
         <if test="name != null and name != ''">
             name = #{name},
         </if>
+        <if test="avatar != null and avatar != ''">
+            avatar = #{avatar},
+        </if>
         <if test="phoneNumber != null and phoneNumber != ''">
             phone_number = #{phoneNumber},
         </if>
-        <if test="description != null and description != ''">
-            description = #{description},
-        </if>
-        <if test="status != null and status != ''">
-            status = #{status},
+        <if test="state != null and state != ''">
+            state = #{state},
         </if>
         <if test="hours != null and hours != ''">
             hours = #{hours},
@@ -68,24 +68,6 @@
                  )
     </insert>
 
-<!--    //1 用户条件分页查询接口-->
-    <select id="findByPage" resultType="com.changing.classroom.model.entity.user.User">
-        select <include refid="columns"/>
-        from users
-        <where>
-            <if test="keyword != null and keyword != ''">
-                and student_id like concat('%',#{keyword},'%')
-            </if>
-            <if test="createTimeBegin != null and createTimeBegin != ''">
-                and create_time >= #{createTimeBegin}
-            </if>
-            <if test="createTimeEnd != null and createTimeEnd != ''">
-                and create_time &lt;= #{createTimeEnd}
-            </if>
-            and is_deleted=0
-        </where>
-        order by id desc
-    </select>
 
     <select id="selectUserInfoByStudentId" resultType="com.changing.classroom.model.entity.user.User">
         SELECT <include refid="columns"/>
@@ -99,10 +81,13 @@
         WHERE phone_number=#{phoneNumber}
         and is_deleted=0
     </select>
-    <select id="getUserInfoById" resultType="com.changing.classroom.model.vo.h5.UserInfoVo">
+    <select id="getUserInfoById" resultType="com.changing.classroom.model.entity.user.User">
         SELECT <include refid="columns"/>
         FROM users
         WHERE id=#{userId}
-        and is_deleted=0
+    </select>
+    <select id="getAllUser" resultType="com.changing.classroom.model.entity.user.User">
+        SELECT <include refid="columns"/>
+        FROM users
     </select>
 </mapper>

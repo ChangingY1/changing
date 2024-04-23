@@ -1,6 +1,6 @@
 package com.changing.classroom.websocket;
 
-import com.changing.classroom.feign.config.FeignConfig;
+//import com.changing.classroom.feign.config.FeignConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;

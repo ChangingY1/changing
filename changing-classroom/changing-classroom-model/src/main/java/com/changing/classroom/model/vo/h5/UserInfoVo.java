@@ -18,7 +18,7 @@ public class UserInfoVo {
     @Schema(description = "电话号码")
     private String phoneNumber;
     @Schema(description = "状态：1为正常，0为禁止")
-    private String status;
+    private Integer state;
     @Schema(description = "学时")
     private int hours;
 

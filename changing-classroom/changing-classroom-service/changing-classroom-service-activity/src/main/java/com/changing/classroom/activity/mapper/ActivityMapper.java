@@ -16,7 +16,7 @@ public interface ActivityMapper {
     int save(Activity activity);
 
     //3 活动修改
-    int update(Activity activity);
+    void update(Activity activity);
 
     //4 活动删除
     int deleteById(Long id);

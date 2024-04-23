@@ -14,6 +14,8 @@ public class Activity extends BaseEntity {
 
     @Schema(description = "活动类型")
     private String type;
+    @Schema(description = "状态")
+    private Integer state;
     @Schema(description = "活动标题")
     private String title;
     @Schema(description = "活动描述")
